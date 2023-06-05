@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import StudentForm from './StudentForm';
-import RegisterForm from './register';
-import './styles.css';
+import React, { useState } from "react";
+import { Provider } from "react-redux";
+import StudentForm from "./StudentForm";
+import RegisterForm from "./register";
+import { store } from "./store";
+import "./styles.css";
 
 function App() {
   const [errorMessages, setErrorMessages] = useState({});
@@ -13,17 +13,17 @@ function App() {
   const database = [
     {
       username: "user1",
-      password: "pass1"
+      password: "pass1",
     },
     {
       username: "user2",
-      password: "pass2"
-    }
+      password: "pass2",
+    },
   ];
 
   const errors = {
     uname: "invalid username",
-    pass: "invalid password"
+    pass: "invalid password",
   };
 
   const handleSubmit = (event) => {
@@ -45,7 +45,9 @@ function App() {
   };
 
   const renderErrorMessage = (name) =>
-    name === errorMessages.name && <div className="error">{errorMessages.message}</div>;
+    name === errorMessages.name && (
+      <div className="error">{errorMessages.message}</div>
+    );
 
   const renderForm = (
     <div className="form">
@@ -92,7 +94,6 @@ function App() {
       <div className="login-form">
         <div className="title">Sign In</div>
         {renderForm}
-        
       </div>
     </div>
   );
