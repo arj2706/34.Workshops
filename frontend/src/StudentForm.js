@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
-import './style1.css';
-import { useCreateStudentMutation, useGetStudentByIdQuery, useUpdateStudentMutation, useDeleteStudentMutation, useGetStudentsQuery } from './api';
-
+import React, { useState } from "react";
+import {
+  useCreateStudentMutation,
+  useDeleteStudentMutation,
+  useGetStudentsQuery,
+  useUpdateStudentMutation,
+} from "./api";
+import "./style1.css";
 
 function StudentForm() {
-  const [studentData, setStudentData] = useState({ id: '', name: '', age: '', grade: '' });
+  const [studentData, setStudentData] = useState({
+    id: "",
+    name: "",
+    age: "",
+    grade: "",
+  });
   const [formErrors, setFormErrors] = useState({});
 
   const { data: students, isLoading: studentsLoading } = useGetStudentsQuery();
-  const [createStudent, { isLoading: createLoading }] = useCreateStudentMutation();
+  const [createStudent, { isLoading: createLoading }] =
+    useCreateStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -22,15 +32,15 @@ function StudentForm() {
     let errors = {};
 
     if (!studentData.name.match(/^[A-Za-z]+$/)) {
-      errors.name = 'Name should only contain alphabets';
+      errors.name = "Name should only contain alphabets";
     }
 
     if (!studentData.grade.match(/^[A-Za-z]+$/)) {
-      errors.grade = 'Grade should only contain alphabets';
+      errors.grade = "Grade should only contain alphabets";
     }
 
     if (!studentData.age.match(/^[0-9]+$/)) {
-      errors.age = 'Age should only contain numbers';
+      errors.age = "Age should only contain numbers";
     }
 
     setFormErrors(errors);
@@ -42,23 +52,23 @@ function StudentForm() {
   const addStudent = async () => {
     if (validateForm()) {
       await createStudent(studentData);
-      setStudentData({ id: '', name: '', age: '', grade: '' });
+      setStudentData({ id: "", name: "", age: "", grade: "" });
     }
   };
 
   const handleUpdate = async () => {
     if (validateForm()) {
       await updateStudent(studentData);
-      setStudentData({ id: '', name: '', age: '', grade: '' });
+      setStudentData({ id: "", name: "", age: "", grade: "" });
     }
-  }
+  };
 
   const handleDelete = async (id) => {
     await deleteStudent(id);
-  }
+  };
 
   // Show loading state while fetching students or creating a student
-  if (studentsLoading || createLoading) return 'Loading...';
+  if (studentsLoading || createLoading) return "Loading...";
 
   return (
     <div className="container">
@@ -66,9 +76,27 @@ function StudentForm() {
       <div className="form-container">
         <h2 className="subtitle">Add Student</h2>
         <form className="form" onSubmit={(e) => e.preventDefault()}>
-          <input type="text" name="name" value={studentData.name} onChange={handleInputChange} placeholder="Name" />
-          <input type="text" name="age" value={studentData.age} onChange={handleInputChange} placeholder="Age" />
-          <input type="text" name="grade" value={studentData.grade} onChange={handleInputChange} placeholder="Grade" />
+          <input
+            type="text"
+            name="name"
+            value={studentData.name}
+            onChange={handleInputChange}
+            placeholder="Name"
+          />
+          <input
+            type="text"
+            name="age"
+            value={studentData.age}
+            onChange={handleInputChange}
+            placeholder="Age"
+          />
+          <input
+            type="text"
+            name="grade"
+            value={studentData.grade}
+            onChange={handleInputChange}
+            placeholder="Grade"
+          />
           <button type="button" onClick={addStudent} className="button">
             Add Student
           </button>
@@ -99,7 +127,9 @@ function StudentForm() {
                 <td>{student.grade}</td>
                 <td>
                   <button onClick={() => setStudentData(student)}>Edit</button>
-                  <button onClick={() => handleDelete(student.id)}>Delete</button>
+                  <button onClick={() => handleDelete(student.id)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
