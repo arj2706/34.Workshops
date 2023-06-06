@@ -6,9 +6,11 @@ export const studentApi = createApi({
   endpoints: (builder) => ({
     getStudents: builder.query({
       query: () => "students",
+      providesTags: ["Student"],
     }),
     getStudentById: builder.query({
       query: (id) => `students/${id}`,
+      providesTags: ["Student"],
     }),
     createStudent: builder.mutation({
       query: (newStudent) => ({
@@ -16,6 +18,7 @@ export const studentApi = createApi({
         method: "POST",
         body: newStudent,
       }),
+      invalidatesTags: ["Student"],
     }),
     updateStudent: builder.mutation({
       query: ({ id, ...student }) => ({
@@ -23,12 +26,14 @@ export const studentApi = createApi({
         method: "PUT",
         body: student,
       }),
+      invalidatesTags: ["Student"],
     }),
     deleteStudent: builder.mutation({
       query: (id) => ({
         url: `students/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Student"],
     }),
   }),
 });
@@ -39,4 +44,4 @@ export const {
   useCreateStudentMutation,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
-} = studentApi.endpoints;
+} = studentApi;
